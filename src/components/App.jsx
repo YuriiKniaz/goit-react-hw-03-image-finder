@@ -26,6 +26,7 @@ export default class App extends Component {
         Notiflix.Notify.failure(
           'Error, there are no images matching these words'
         );
+
         return;
       }
 
@@ -65,14 +66,16 @@ export default class App extends Component {
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
   render() {
-    const { loading, images } = this.state;
+    const { loading, images, totalPages, page } = this.state;
 
     return (
       <div className="mainBlock">
         <Searchbar getSearchData={this.onSearch} />
         <ImageGallery images={images} />
         {loading && <Loader />}
-        {images.length > 0 && <Button onClick={this.loadMoreBtn} />}
+        {images.length > 0 && totalPages > page && (
+          <Button onClick={this.loadMoreBtn} />
+        )}
       </div>
     );
   }
